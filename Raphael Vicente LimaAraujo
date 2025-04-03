@@ -1,0 +1,39 @@
+elif opcao == 5:
+    try:
+        codigoManifestacao = int(input("Digite o código da manifestação: "))
+        consultaPesquisaManifestacao = 'SELECT * FROM manifestacoes WHERE codigo = %s'
+        registros = listarBancoDados(conn, consultaPesquisaManifestacao, (codigoManifestacao,))
+
+        if registros:
+            registro = registros[0]
+            tipo, descricao = registro[1], registro[2]
+            print(f"Manifestação encontrada: {tipo}")
+            print(f"Descrição: {descricao}")
+        else:
+            print("Nenhuma manifestação encontrada para o código informado.")
+    except ValueError:
+        print("Entrada inválida! Digite um número inteiro.")
+
+elif opcao == 6:
+    try:
+        codigoManifestacao = int(input("Digite o código da manifestação a remover: "))
+        consultaPesquisaManifestacao = 'SELECT * FROM manifestacoes WHERE codigo = %s'
+        registros = listarBancoDados(conn, consultaPesquisaManifestacao, (codigoManifestacao,))
+
+        if registros:
+            confirmacao = input(f"Tem certeza que deseja remover a manifestação '{registros[0][1]}'? (s/n): ").strip().lower()
+            
+            if confirmacao == 's':
+                consultaRemover = "DELETE FROM manifestacoes WHERE codigo = %s"
+                linhasAlteradas = excluirBancoDados(conn, consultaRemover, (codigoManifestacao,))
+
+                if linhasAlteradas > 0:
+                    print("Manifestação removida com sucesso!")
+                else:
+                    print("Erro ao remover a manifestação.")
+            else:
+                print("Operação cancelada.")
+        else:
+            print("Nenhuma manifestação encontrada para o código informado.")
+    except ValueError:
+        print("Entrada inválida! Digite um número inteiro.")
