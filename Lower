@@ -1,0 +1,6 @@
+if tipoManifestacao == 1:
+    tipo = "SELECT * FROM manifestacoes WHERE LOWER(tipo) LIKE 'r%'"
+elif tipoManifestacao == 2:
+    tipo = "SELECT * FROM manifestacoes WHERE LOWER(tipo) LIKE 'e%'"
+elif tipoManifestacao == 3:
+    tipo = "SELECT * FROM manifestacoes WHERE LOWER(tipo) LIKE 's%'"
